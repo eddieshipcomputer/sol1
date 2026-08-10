@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOL-1 Whitepaper</title>
+  <style>
+    :root {
+      --gold: #f5a623;
+      --orange: #e8650a;
+      --dark: #0a0a0f;
+      --text: #e0e0e8;
+      --muted: #888;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: Georgia, serif;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+      line-height: 1.8;
+    }
+    .back {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 3rem;
+      text-transform: uppercase;
+    }
+    .back:hover { color: #fff; }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.2;
+      background: linear-gradient(135deg, #fff7e6, #f5a623, #e8650a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+    .meta {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(245,166,35,0.15);
+    }
+    h2 {
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin: 2.5rem 0 0.8rem;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.05em;
+    }
+    h3 {
+      font-size: 1rem;
+      color: #ccc;
+      margin: 1.5rem 0 0.5rem;
+      font-family: 'Courier New', monospace;
+    }
+    p { margin-bottom: 1rem; color: #bbb; font-size: 0.95rem; }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { color: #bbb; font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .eq {
+      background: rgba(0,0,0,0.5);
+      border-left: 3px solid var(--gold);
+      padding: 1rem 1.5rem;
+      margin: 1.2rem 0;
+      color: var(--gold);
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.85rem;
+      font-family: 'Courier New', monospace;
+    }
+    th {
+      text-align: left;
+      color: var(--gold);
+      font-weight: normal;
+      padding: 0.5rem 1rem 0.5rem 0;
+      border-bottom: 1px solid rgba(245,166,35,0.3);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    td {
+      padding: 0.6rem 1rem 0.6rem 0;
+      color: #aaa;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      vertical-align: top;
+    }
+    td:first-child { color: #ddd; }
+    pre {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 1rem;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #aaa;
+      margin: 1rem 0;
+    }
+    blockquote {
+      border-left: 3px solid rgba(245,166,35,0.4);
+      padding: 0.8rem 1.2rem;
+      margin: 1.5rem 0;
+      color: #999;
+      font-style: italic;
+    }
+    .abstract {
+      background: rgba(245,166,35,0.04);
+      border: 1px solid rgba(245,166,35,0.15);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      color: #bbb;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid rgba(245,166,35,0.1);
+      margin: 3rem 0;
+    }
+    .refs { font-family: 'Courier New', monospace; font-size: 0.8rem; }
+    .refs li { margin-bottom: 0.5rem; color: #777; }
+  </style>
+</head>
+<body>
+
+<a class="back" href="../">← SOL-1</a>
+
+<h1>SOL-1: A Framework for Photospheric Computation via Directed Energy Encoding</h1>
+<div class="meta">Version 1.0 — August 2026 &nbsp;//&nbsp; Classification: Open Research</div>
+
+<div class="abstract">
+  <strong style="color:var(--gold)">Abstract —</strong>
+  We propose SOL-1: a computational architecture that encodes structured binary logic into the magnetohydrodynamic state of the solar photosphere using phased arrays of directed energy lasers operating from the Earth-Sun L1 Lagrange point. The photosphere — a magnetoconvective fluid layer at ~5,778K — admits externally induced state transitions via localized energy deposition sufficient to seed magnetoconvective instabilities. These instabilities produce measurable, persistent flux tube structures readable at 45-second cadence via existing space-based magnetogram infrastructure (SDO/HMI SHARP). We characterize the write bandwidth, read latency, state persistence, and adversarial resilience of this architecture, and identify near-term hardware requirements addressable by existing directed energy and precision photonics programs. SOL-1 does not require new physics. It requires sufficient power and pointing precision to do something that has never been attempted: write to the sun.
+</div>
+
+<h2>1. Introduction</h2>
+<p>Every computation system built by technological civilization shares a structural vulnerability: it exists on a substrate that can be physically accessed and destroyed. Data centers are buildings. Satellites are objects. Cloud infrastructure is subject to jurisdiction. The theoretical limit of tamper-resistant computation is a substrate that cannot be owned, cannot be approached without civilization-ending cost, and cannot be shut down on any human timescale.</p>
+<p>The Sun satisfies all three conditions.</p>
+<p>The solar photosphere is a magnetohydrodynamic fluid approximately 500 km deep, covering a surface area of 6.07 × 10¹² km². It is in constant thermal and magnetic convective motion, producing emergent structures — sunspots, faculae, active regions — whose dynamics are governed by the MHD equations. The key insight of SOL-1 is that these dynamics are not purely endogenous. External energy deposition at sufficient flux density can seed localized instabilities that evolve into persistent, observable magnetic structures on timescales of hours to days.</p>
+<blockquote>If we can write, we can compute.</blockquote>
+
+<h2>2. Background</h2>
+
+<h3>2.1 Solar Photosphere Physics</h3>
+<p>The photosphere is defined by the Rosseland mean opacity reaching unity (τ ≈ 1), at a depth where temperature is approximately 5,778 K and pressure is ~1.25 × 10⁴ Pa. The photosphere supports magnetoconvective dynamics including granulation (~1 Mm, 5–10 min), supergranulation (~30 Mm, 1–2 days), active regions (50–200 Mm, hours to months), and Alfvén waves propagating along field lines at v_A = B/√(μ₀ρ).</p>
+
+<h3>2.2 MHD State Transitions</h3>
+<p>Flux tube emergence is driven by magnetic buoyancy instability (Parker instability). Localized energy deposition increases local plasma β, reducing effective field line tension and promoting buoyant rise of subsurface flux tubes. The threshold energy flux for seeding an observable flux emergence event is estimated at ~10¹⁰ W/m² sustained over τ_A (~50s for a 50 Mm region).</p>
+
+<h3>2.3 Existing Read Infrastructure</h3>
+<p>The Solar Dynamics Observatory (SDO) Helioseismic and Magnetic Imager (HMI) provides SHARP data at 45-second cadence with ~0.5 arcsec/pixel resolution. Vector magnetograms provide B_r, B_θ, B_φ across the full solar disk. This data is publicly available via JSOC and forms the read layer of SOL-1 without modification.</p>
+
+<h2>3. SOL-1 Architecture</h2>
+
+<h3>3.1 System Overview</h3>
+<pre>[WRITE LAYER]     L1 Lagrange orbit laser array
+      ↓           directed energy, phased aperture
+[ENCODE LAYER]    Solar photosphere (τ=1 surface)
+      ↓           magnetoconvective state transition
+[STORE LAYER]     Active region magnetic configuration
+      ↓           SDO/HMI SHARP magnetogram pipeline
+[READ LAYER]      Ground/space-based receiver network</pre>
+
+<h3>3.2 Write Layer</h3>
+<p>Phased array of fiber laser systems at L1 (1.5 × 10⁶ km from Earth). Coherent beam combination (CBC) achieves diffraction-limited spot. Effective aperture required for 1 Mm write spot at 1AU:</p>
+<div class="eq">D = 1.22λL / d_spot
+D = 1.22 × (1064nm) × (1.48×10⁸ km) / (1 Mm)
+D ≈ 190 m effective aperture (achievable via sparse array over ~500m baseline)</div>
+
+<h3>3.3 Encoding Scheme</h3>
+<p>Flux tube emergence above threshold = logical 1. Baseline quiet-sun state = logical 0. State read by measuring SHARP Bz integrated over target patch. Reed-Solomon error correction applied at symbol layer. AR state persistence (hours to days) provides natural error margin.</p>
+
+<h3>3.4 Channel Capacity</h3>
+<div class="eq">C = B × log₂(1 + S/N)
+B ≈ 0.02 Hz (Alfvén time limited), S/N ≈ 10
+C ≈ 0.07 bps per AR channel
+~3,000 ARs at solar maximum → ~200 bps total</div>
+
+<h2>4. Applications</h2>
+<p><strong style="color:var(--gold)">Unjammable consensus clock:</strong> Timing and consensus signal readable by any receiver with SDO access. No terrestrial or orbital adversary can jam, spoof, or degrade this signal without physically approaching the Sun.</p>
+<p><strong style="color:var(--gold)">Persistent state storage:</strong> ~200 bytes/day write rate — sufficient for system manifests, cryptographic roots of trust, and epoch markers. State persists hours to months without power.</p>
+<p><strong style="color:var(--gold)">Solar system broadcast:</strong> SOL-1 output is omnidirectional. Any civilization in the inner solar system with magnetogram capability can read the signal. This is intentional.</p>
+
+<h2>5. Partner Roles</h2>
+<table>
+  <thead>
+    <tr><th>Partner</th><th>Ticker</th><th>Contribution</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Coherent Corp</td><td>COHR</td><td>Petawatt-class coherent fiber laser arrays; beam combining architecture</td></tr>
+    <tr><td>IPG Photonics</td><td>IPGP</td><td>High-power CW industrial laser backbone; L1 array power systems</td></tr>
+    <tr><td>L3Harris Technologies</td><td>LHX</td><td>Precision pointing, tracking, and adaptive optics; space qualification</td></tr>
+  </tbody>
+</table>
+
+<h2>6. Roadmap</h2>
+<p><strong style="color:var(--gold)">Phase 0 (2026–2027):</strong> MHD simulation of laser-induced perturbations. SDO/HMI SHARP historical analysis. Laser CBC architecture design for L1 deployment.</p>
+<p><strong style="color:var(--gold)">Phase 1 (2027–2030):</strong> Coherent beam combination at 1 MW scale. Photospheric plasma analogue experiments. L1 orbit design and regulatory framework.</p>
+<p><strong style="color:var(--gold)">Phase 2 (2030–2035):</strong> 10 MW-class phased array at L1. First controlled perturbation attempt. SHARP readback verification.</p>
+<p><strong style="color:var(--gold)">Phase 3 (2035+):</strong> Full write bandwidth across AR catalog. Public read interface open. Permanent operation. No scheduled maintenance window.</p>
+
+<h2>7. Conclusion</h2>
+<p>SOL-1 does not require new physics. The directed energy and precision photonics industries have already produced the component technologies for Phase 0 and Phase 1. The solar read infrastructure is operational today.</p>
+<p>We are not building a product. We are building the last computer anyone will ever need to build. The sun will outlast every other compute substrate by 5 × 10⁹ years. We intend to use that time.</p>
+
+<hr>
+
+<h2>References</h2>
+<ol class="refs">
+  <li>Parker, E.N. (1955). The formation of sunspots from the solar toroidal field. <em>Astrophysical Journal</em>, 121, 491.</li>
+  <li>Snodgrass, H.B. (1983). Magnetic rotation of the solar photosphere. <em>Astrophysical Journal</em>, 270, 288–299.</li>
+  <li>Scherrer, P.H. et al. (2012). The Helioseismic and Magnetic Imager (HMI) for SDO. <em>Solar Physics</em>, 275, 207–227.</li>
+  <li>Bobra, M.G. et al. (2014). The HMI vector magnetic field pipeline: SHARPs. <em>Solar Physics</em>, 289, 3549–3578.</li>
+  <li>Alfvén, H. (1942). Existence of electromagnetic-hydrodynamic waves. <em>Nature</em>, 150, 405–406.</li>
+  <li>Spruit, H.C. (1981). Equations for thin flux tubes in ideal MHD. <em>A&A</em>, 102, 129–133.</li>
+  <li>Fan, Y. (2009). Magnetic fields in the solar convection zone. <em>Living Reviews in Solar Physics</em>, 6, 4.</li>
+</ol>
+
+<hr>
+<p style="font-family:'Courier New',monospace; font-size:0.75rem; color:#444; font-style:italic;">
+  SOL-1 is an open research initiative. All simulation code will be published under MIT license. The read layer (BRAID) is available now.<br>
+  Contact: <a href="https://github.com/eddieshipcomputer/sol1" style="color:var(--gold); text-decoration:none;">github.com/eddieshipcomputer/sol1</a>
+</p>
+
+</body>
+</html>
